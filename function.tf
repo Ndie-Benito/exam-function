@@ -34,7 +34,7 @@ resource "azurerm_linux_function_app" "app_benito" {
   storage_account_access_key = azurerm_storage_account.storage_benito.primary_access_key
 
   site_config {
-    # Supprimé linux_fx_version car c'est automatiquement déterminé
+    # Configuration spécifique à la fonction
   }
 }
 
@@ -44,22 +44,25 @@ resource "azurerm_web_application_firewall_policy" "waf_benito" {
   resource_group_name = azurerm_resource_group.rg_benito.name
   location            = azurerm_resource_group.rg_benito.location
 
+  # Bloc de règles gérées
   managed_rules {
-    # Exemple d'utilisation des règles gérées
+    # Exemple d'utilisation des règles gérées, ici OWASP
     rule_set_type    = "OWASP"
     rule_set_version = "3.2"
   }
 
+  # Bloc de règles personnalisées
   custom_rules {
     name     = "allow_all"
     priority = 1
     action   = "Allow"
+
     match_conditions {
       match_variables {
         variable_name = "RequestUri"
       }
       operator = "Equals"
-      values   = ["/"]
+      values   = ["/"]  # Correction des valeurs ici
     }
   }
 }
