@@ -1,3 +1,6 @@
+provider "azurerm" {
+  features {}
+}
 
 # Création du groupe de ressources
 resource "azurerm_resource_group" "rg_benito" {
@@ -28,9 +31,13 @@ resource "azurerm_linux_function_app" "app_benito" {
   name                      = "yourfirstnamemcitfunction"
   location                  = azurerm_resource_group.rg_benito.location
   resource_group_name       = azurerm_resource_group.rg_benito.name
-  app_service_plan_id       = azurerm_service_plan.plan_app_benito.id
+  service_plan_id           = azurerm_service_plan.plan_app_benito.id
   storage_account_name      = azurerm_storage_account.storage_benito.name
   storage_account_access_key = azurerm_storage_account.storage_benito.primary_access_key
+
+  site_config {
+    linux_fx_version = "DOTNET|6.0"
+  }
 }
 
 # Création de la politique WAF
@@ -39,7 +46,7 @@ resource "azurerm_web_application_firewall_policy" "waf_benito" {
   resource_group_name = azurerm_resource_group.rg_benito.name
   location            = azurerm_resource_group.rg_benito.location
 
-  managed_rule_sets {
+  managed_rules {
     rule_set_type    = "OWASP"
     rule_set_version = "3.2"
   }
