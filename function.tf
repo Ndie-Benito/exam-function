@@ -1,5 +1,4 @@
 
-
 # Création du groupe de ressources
 resource "azurerm_resource_group" "rg_benito" {
   name     = "rg-function-app"
@@ -45,7 +44,7 @@ resource "azurerm_web_application_firewall_policy" "waf_benito" {
   location            = azurerm_resource_group.rg_benito.location
 
   # Bloc de règles gérées
-  managed_rule_sets {
+  managed_rules {
     rule_set_type    = "OWASP"
     rule_set_version = "3.2"
   }
