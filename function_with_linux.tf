@@ -1,4 +1,4 @@
-
+#creation avec linux
 
 # Création du groupe de ressources
 resource "azurerm_resource_group" "rg_benito" {
