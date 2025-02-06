@@ -1,4 +1,6 @@
-
+provider "azurerm" {
+  features {}
+}
 
 # Création du groupe de ressources
 resource "azurerm_resource_group" "rg_benito" {
@@ -63,8 +65,8 @@ resource "azurerm_web_application_firewall_policy" "waf_benito" {
       match_variables {
         variable_name = "RequestUri"  # Variable à vérifier
       }
-      operator     = "Equals"         # Opérateur de correspondance
-      match_values = ["/"]            # Valeurs à vérifier
+      operator     = "Equal"         # Opérateur de correspondance (corrigé)
+      match_values = ["/"]           # Valeurs à vérifier
     }
   }
 }
