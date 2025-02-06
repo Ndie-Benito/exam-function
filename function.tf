@@ -1,6 +1,4 @@
-provider "azurerm" {
-  features {}
-}
+
 
 # Création du groupe de ressources
 resource "azurerm_resource_group" "rg_benito" {
