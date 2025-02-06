@@ -17,7 +17,7 @@ resource "azurerm_service_plan" "plan_app_benito" {
 
 # Création du compte de stockage
 resource "azurerm_storage_account" "storage_benito" {
-  name                     = "functionappstoragebenito"  # Nom en minuscules
+  name                     = "benitoappstoragebenito"  # Nom en minuscules
   resource_group_name      = azurerm_resource_group.rg_benito.name
   location                 = azurerm_resource_group.rg_benito.location
   account_tier             = "Standard"
