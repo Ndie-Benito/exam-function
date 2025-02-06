@@ -1,4 +1,4 @@
-/*
+
 # Création du groupe de ressources
 resource "azurerm_resource_group" "rg_benito" {
   name     = "rg-function-app"
@@ -66,4 +66,4 @@ resource "azurerm_web_application_firewall_policy" "waf_benito" {
       match_values = ["/"]           # Valeurs à vérifier
     }
   }
-} */
+} 
