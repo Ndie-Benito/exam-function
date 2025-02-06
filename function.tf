@@ -11,15 +11,13 @@ resource "azurerm_service_plan" "plan_app_benito" {
   name                     = "function-app-service-plan"
   location                 = azurerm_resource_group.rg_benito.location
   resource_group_name      = azurerm_resource_group.rg_benito.name
-  kind                     = "Linux"
-  reserved                 = true
   sku_name                 = "S1"
   os_type                  = "Linux"
 }
 
 # Création du compte de stockage
 resource "azurerm_storage_account" "storage_benito" {
-  name                     = "functionappstoragebenito"  # Nom en minuscules
+  name                     = "functionappstoragebenito"
   resource_group_name       = azurerm_resource_group.rg_benito.name
   location                 = azurerm_resource_group.rg_benito.location
   account_tier              = "Standard"
@@ -38,14 +36,21 @@ resource "azurerm_function_app" "app_benito" {
 }
 
 # Création de la politique WAF
-resource "azurerm_web_application_firewall_policy" "example" {
+resource "azurerm_web_application_firewall_policy" "waf_benito" {
   name                = "benitomcitfunction"
   resource_group_name = azurerm_resource_group.rg_benito.name
   location            = azurerm_resource_group.rg_benito.location
 
-  managed_rule_set {
-    rule_set_type    = "OWASP"
-    rule_set_version = "3.2"
+  managed_rules {
+    action   = "Allow"
+    priority = 1
+    match_conditions {
+      match_variables {
+        variable_name = "RequestUri"
+      }
+      operator = "Equals"
+      values   = ["/"]
+    }
   }
 
   custom_rules {
