@@ -45,8 +45,7 @@ resource "azurerm_web_application_firewall_policy" "waf_benito" {
   location            = azurerm_resource_group.rg_benito.location
 
   # Bloc de règles gérées
-  managed_rules {
-    # Exemple d'utilisation des règles gérées, ici OWASP
+  managed_rule_sets {
     rule_set_type    = "OWASP"
     rule_set_version = "3.2"
   }
@@ -62,7 +61,8 @@ resource "azurerm_web_application_firewall_policy" "waf_benito" {
         variable_name = "RequestUri"
       }
       operator = "Equals"
-      values   = ["/"]  # Correction des valeurs ici
+      values   = ["/"]  # Condition de correspondance pour la racine
     }
+    rule_type = "Match"  # Ajout de l'argument "rule_type"
   }
 }
