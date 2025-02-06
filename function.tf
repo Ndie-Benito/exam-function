@@ -1,4 +1,6 @@
-
+provider "azurerm" {
+  features {}
+}
 
 # Création du groupe de ressources
 resource "azurerm_resource_group" "rg_benito" {
@@ -34,7 +36,7 @@ resource "azurerm_linux_function_app" "app_benito" {
   storage_account_access_key = azurerm_storage_account.storage_benito.primary_access_key
 
   site_config {
-    linux_fx_version = "DOTNET|6.0"
+    # Supprimé linux_fx_version car c'est automatiquement déterminé
   }
 }
 
@@ -45,6 +47,7 @@ resource "azurerm_web_application_firewall_policy" "waf_benito" {
   location            = azurerm_resource_group.rg_benito.location
 
   managed_rules {
+    # Exemple d'utilisation des règles gérées
     rule_set_type    = "OWASP"
     rule_set_version = "3.2"
   }
